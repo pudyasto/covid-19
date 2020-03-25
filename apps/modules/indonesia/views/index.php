@@ -133,16 +133,20 @@
             <div class="card-body table-responsive">
                 <table class="table table-hover table-indonesia">
                     <thead>
-                        <th>Wilayah</th>
-                        <th style="width: 10px;">Positif</th>
-                        <th style="width: 10px;">Sembuh</th>
-                        <th style="width: 10px;">Meninggal</th>
+                        <tr>
+                            <th>Wilayah</th>
+                            <th style="width: 10px;">Positif</th>
+                            <th style="width: 10px;">Sembuh</th>
+                            <th style="width: 10px;">Meninggal</th>
+                        </tr>
                     </thead>
                     <tfoot>
-                        <th>Wilayah</th>
-                        <th>ID</th>
-                        <th>ID</th>
-                        <th>ID</th>
+                        <tr>
+                            <th>Wilayah</th>
+                            <th>ID</th>
+                            <th>ID</th>
+                            <th>ID</th>
+                        </tr>
                     </tfoot>
                     <tbody></tbody>
                 </table>
@@ -207,7 +211,7 @@
             "columnDefs": column_def_indonesia,
             "columns": column_list_indonesia,
             "order": [
-                [0, "asc"]
+                [1, "desc"]
             ],
             buttons: {
                 dom: {
@@ -290,7 +294,10 @@
                 csrf_token: $('meta[name=csrf]').attr("content")
             },
             beforeSend: function(result) {
-
+                $(".total-positif").html('<i class="fa fa-refresh fa-spin font-icon-widget"></i>');
+                $(".total-dirawat").html('<i class="fa fa-refresh fa-spin font-icon-widget"></i>');
+                $(".total-sembuh").html('<i class="fa fa-refresh fa-spin font-icon-widget"></i>');
+                $(".total-meninggal").html('<i class="fa fa-refresh fa-spin font-icon-widget"></i>');
             },
             success: function(resp) {
 
@@ -366,7 +373,7 @@
                                 ],
                                 fill: false,
                                 lineTension: 0.5,
-                                label: 'Penjualan Per Sosial Media'
+                                label: "Rasio Kasus Virus Covid-19 Di Negara " + country_name
                             }],
                             labels: PLabel
                         },
@@ -550,7 +557,6 @@
             success: function(resp) {
                 if (isJson(resp)) {
                     var obj = jQuery.parseJSON(resp);
-                    $(".total-negara").html(obj.length);
                     table_indonesia.clear().draw();
                     $.each(obj, function(i, val) {
                         table_indonesia.row.add(val.attributes).draw();

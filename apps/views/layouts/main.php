@@ -30,13 +30,18 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="<?= base_url('material/assets/css/material-dashboard.css'); ?>" rel="stylesheet" />
+  <link href="<?= base_url('material/assets/css/material-dashboard.min.css'); ?>" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
   <!-- Data Tables -->
   <link rel="stylesheet" href="<?= base_url('material/datatables/datatables.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('material/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('material/datatables/Select-1.2.4/css/select.bootstrap4.min.css'); ?>">
-  
+  <!-- select2 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" />
+  <!-- datetimepicker -->
+  <link rel="stylesheet" href="https://demos.creative-tim.com/material-dashboard-pro/assets/css/material-dashboard.min.css?v=2.1.2">
+
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="<?= base_url('material/assets/demo/demo.css'); ?>" rel="stylesheet" />
 
@@ -46,11 +51,17 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="<?= base_url('material/assets/js/core/bootstrap-material-design.min.js"'); ?>"></script>
   <script src="<?= base_url('material/assets/js/plugins/perfect-scrollbar.jquery.min.js"'); ?>"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 
   <!-- datatables -->
   <script src="<?= base_url('material/datatables/datatables.min.js'); ?>"></script>
   <script src="<?= base_url('material/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js'); ?>"></script>
-  <script src="<?= base_url('material/datatables/Select-1.2.4/js/dataTables.select.min.js'); ?>"></script>  
+  <script src="<?= base_url('material/datatables/Select-1.2.4/js/dataTables.select.min.js'); ?>"></script>
+
+  <!-- select2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.full.min.js"></script>
+  <!-- datetimepicker -->
+  <script src="<?= base_url('material/datetimepicker/bootstrap-datetimepicker.min.js'); ?>"></script>
 
   <script>
     function isJson(str) {
@@ -92,7 +103,7 @@ The above copyright notice and this permission notice shall be included in all c
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo">
+      <div class="logo text-center">
         <a href="<?= site_url(); ?>" class="simple-text logo-normal">
           COVID-19
         </a>
@@ -124,7 +135,7 @@ The above copyright notice and this permission notice shall be included in all c
           $class = ($this->uri->segment(1)) ? $this->uri->segment(1) : 'home';
           $title = "Home";
           foreach ($url as $value) {
-            if(($value['class'] == $class)){
+            if (($value['class'] == $class)) {
               $title = $value['name'];
             }
           ?>
@@ -148,7 +159,7 @@ The above copyright notice and this permission notice shall be included in all c
         <div class="container-fluid">
 
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#"><?=$title;?></a>
+            <a class="navbar-brand" href="#"><?= $title; ?></a>
           </div>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -241,186 +252,191 @@ The above copyright notice and this permission notice shall be included in all c
 
   <!-- Plugin for the momentJs  -->
   <script src=" <?= base_url('material/assets/js/plugins/moment.min.js"'); ?>"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="<?= base_url('material/assets/js/material-dashboard.js'); ?>" type="text/javascript"></script>
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
+            <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+            <script src="<?= base_url('material/assets/js/material-dashboard.js'); ?>" type="text/javascript"></script>
+            <script>
+              $(document).ready(function() {
+                $().ready(function() {
+                  $sidebar = $('.sidebar');
 
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
+                  $sidebar_img_container = $sidebar.find('.sidebar-background');
 
-        $full_page = $('.full-page');
+                  $full_page = $('.full-page');
 
-        $sidebar_responsive = $('body > .navbar-collapse');
+                  $sidebar_responsive = $('body > .navbar-collapse');
 
-        window_width = $(window).width();
+                  window_width = $(window).width();
 
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+                  fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
-        if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-          if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-            $('.fixed-plugin .dropdown').addClass('open');
-          }
+                  if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+                    if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+                      $('.fixed-plugin .dropdown').addClass('open');
+                    }
 
-        }
+                  }
 
-        $('.fixed-plugin a').click(function(event) {
-          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
-          }
-        });
+                  $('.fixed-plugin a').click(function(event) {
+                    // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+                    if ($(this).hasClass('switch-trigger')) {
+                      if (event.stopPropagation) {
+                        event.stopPropagation();
+                      } else if (window.event) {
+                        window.event.cancelBubble = true;
+                      }
+                    }
+                  });
 
-        $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
+                  $('.fixed-plugin .active-color span').click(function() {
+                    $full_page_background = $('.full-page-background');
 
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
 
-          var new_color = $(this).data('color');
+                    var new_color = $(this).data('color');
 
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-color', new_color);
-          }
+                    if ($sidebar.length != 0) {
+                      $sidebar.attr('data-color', new_color);
+                    }
 
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
+                    if ($full_page.length != 0) {
+                      $full_page.attr('filter-color', new_color);
+                    }
 
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data-color', new_color);
-          }
-        });
+                    if ($sidebar_responsive.length != 0) {
+                      $sidebar_responsive.attr('data-color', new_color);
+                    }
+                  });
 
-        $('.fixed-plugin .background-color .badge').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
+                  $('.fixed-plugin .background-color .badge').click(function() {
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
 
-          var new_color = $(this).data('background-color');
+                    var new_color = $(this).data('background-color');
 
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-background-color', new_color);
-          }
-        });
+                    if ($sidebar.length != 0) {
+                      $sidebar.attr('data-background-color', new_color);
+                    }
+                  });
 
-        $('.fixed-plugin .img-holder').click(function() {
-          $full_page_background = $('.full-page-background');
+                  $('.fixed-plugin .img-holder').click(function() {
+                    $full_page_background = $('.full-page-background');
 
-          $(this).parent('li').siblings().removeClass('active');
-          $(this).parent('li').addClass('active');
+                    $(this).parent('li').siblings().removeClass('active');
+                    $(this).parent('li').addClass('active');
 
 
-          var new_image = $(this).find("img").attr('src');
+                    var new_image = $(this).find("img").attr('src');
 
-          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            $sidebar_img_container.fadeOut('fast', function() {
-              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-              $sidebar_img_container.fadeIn('fast');
-            });
-          }
+                    if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+                      $sidebar_img_container.fadeOut('fast', function() {
+                        $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                        $sidebar_img_container.fadeIn('fast');
+                      });
+                    }
 
-          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+                    if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+                      var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-            $full_page_background.fadeOut('fast', function() {
-              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-              $full_page_background.fadeIn('fast');
-            });
-          }
+                      $full_page_background.fadeOut('fast', function() {
+                        $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                        $full_page_background.fadeIn('fast');
+                      });
+                    }
 
-          if ($('.switch-sidebar-image input:checked').length == 0) {
-            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+                    if ($('.switch-sidebar-image input:checked').length == 0) {
+                      var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+                      var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          }
+                      $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                      $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                    }
 
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-          }
-        });
+                    if ($sidebar_responsive.length != 0) {
+                      $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+                    }
+                  });
 
-        $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
+                  $('.switch-sidebar-image input').change(function() {
+                    $full_page_background = $('.full-page-background');
 
-          $input = $(this);
+                    $input = $(this);
 
-          if ($input.is(':checked')) {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar_img_container.fadeIn('fast');
-              $sidebar.attr('data-image', '#');
-            }
+                    if ($input.is(':checked')) {
+                      if ($sidebar_img_container.length != 0) {
+                        $sidebar_img_container.fadeIn('fast');
+                        $sidebar.attr('data-image', '#');
+                      }
 
-            if ($full_page_background.length != 0) {
-              $full_page_background.fadeIn('fast');
-              $full_page.attr('data-image', '#');
-            }
+                      if ($full_page_background.length != 0) {
+                        $full_page_background.fadeIn('fast');
+                        $full_page.attr('data-image', '#');
+                      }
 
-            background_image = true;
-          } else {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar.removeAttr('data-image');
-              $sidebar_img_container.fadeOut('fast');
-            }
+                      background_image = true;
+                    } else {
+                      if ($sidebar_img_container.length != 0) {
+                        $sidebar.removeAttr('data-image');
+                        $sidebar_img_container.fadeOut('fast');
+                      }
 
-            if ($full_page_background.length != 0) {
-              $full_page.removeAttr('data-image', '#');
-              $full_page_background.fadeOut('fast');
-            }
+                      if ($full_page_background.length != 0) {
+                        $full_page.removeAttr('data-image', '#');
+                        $full_page_background.fadeOut('fast');
+                      }
 
-            background_image = false;
-          }
-        });
+                      background_image = false;
+                    }
+                  });
 
-        $('.switch-sidebar-mini input').change(function() {
-          $body = $('body');
+                  $('.switch-sidebar-mini input').change(function() {
+                    $body = $('body');
 
-          $input = $(this);
+                    $input = $(this);
 
-          if (md.misc.sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            md.misc.sidebar_mini_active = false;
+                    if (md.misc.sidebar_mini_active == true) {
+                      $('body').removeClass('sidebar-mini');
+                      md.misc.sidebar_mini_active = false;
 
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+                      $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
-          } else {
+                    } else {
 
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+                      $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
 
-            setTimeout(function() {
-              $('body').addClass('sidebar-mini');
+                      setTimeout(function() {
+                        $('body').addClass('sidebar-mini');
 
-              md.misc.sidebar_mini_active = true;
-            }, 300);
-          }
+                        md.misc.sidebar_mini_active = true;
+                      }, 300);
+                    }
 
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
+                    // we simulate the window Resize so the charts will get updated in realtime.
+                    var simulateWindowResize = setInterval(function() {
+                      window.dispatchEvent(new Event('resize'));
+                    }, 180);
 
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
+                    // we stop the simulation of Window Resize after the animations are completed
+                    setTimeout(function() {
+                      clearInterval(simulateWindowResize);
+                    }, 1000);
 
-        });
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
+                  });
+                });
+              });
+            </script>
+            <script>
+              $(document).ready(function() {
+                // Javascript method's body can be found in assets/js/demos.js
+                md.initDashboardPageCharts();
 
-    });
-  </script>
+              });
+
+              $('.calendar').datetimepicker({
+                  'showTodayButton': false,
+                  'format': 'DD-MM-YYYY'
+                });
+            </script>
 </body>
 
 </html>
