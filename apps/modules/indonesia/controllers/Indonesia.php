@@ -77,7 +77,7 @@ class Indonesia extends MY_Controller
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
-                "x-rapidapi-key: ".KEY_RAPIDAPI
+                "x-rapidapi-key: " . KEY_RAPIDAPI
             ),
         ));
 
@@ -108,7 +108,7 @@ class Indonesia extends MY_Controller
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
-                "x-rapidapi-key: ". KEY_RAPIDAPI
+                "x-rapidapi-key: " . KEY_RAPIDAPI
             ),
         ));
 

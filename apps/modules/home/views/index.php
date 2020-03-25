@@ -591,11 +591,11 @@
 
                     var selisih = 0;
                     if (latJmlSembuh.length > 1) {
-                        selisih = Number(latJmlSembuh[0]) - Number(latJmlSembuh[1]);
+                        selisih = Number(latJmlSembuh[1]) - Number(latJmlSembuh[0]);
                         if (selisih < 0) {
-                            $(".selisih-sembuh").html('<span class="text-danger"><i class="fa fa-long-arrow-up"></i> ' + numeral(Math.abs(selisih)).format('0,0') + ' </span> Kasus Sembuh');
+                            $(".selisih-sembuh").html('<span class="text-danger"><i class="fa fa-long-arrow-down"></i> ' + numeral(Math.abs(selisih)).format('0,0') + ' </span> Kasus Sembuh');
                         } else {
-                            $(".selisih-sembuh").html('<span class="text-success"><i class="fa fa-long-arrow-down"></i> ' + numeral(Math.abs(selisih)).format('0,0') + ' </span> Kasus Sembuh');
+                            $(".selisih-sembuh").html('<span class="text-success"><i class="fa fa-long-arrow-up"></i> ' + numeral(Math.abs(selisih)).format('0,0') + ' </span> Kasus Sembuh');
                         }
                     }
 

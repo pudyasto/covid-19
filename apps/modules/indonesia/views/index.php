@@ -121,10 +121,36 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12 col-md-12">
+    <div class="col-lg-6 col-md-6">
+        <div class="card">
+            <div class="card-header card-header-warning">
+                <h4 class="card-title"><i class="material-icons text-white">assessment</i> Log Kasus Virus Covid-19 Di Indonesia</h4>
+                <p class="card-category">
+                    <i class="material-icons text-white">link</i>
+                    <a href="https://rapidapi.com/astsiatsko/api/coronavirus-monitor">https://rapidapi.com/astsiatsko/api/coronavirus-monitor</a>
+                </p>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover table-history-indonesia">
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">Tgl Jam</th>
+                            <th style="text-align: center !important;">Positif</th>
+                            <th style="width: 105px;text-align: center !important;">Kasus Baru</th>
+                            <th style="width: 105px;text-align: center !important;">Dirawat</th>
+                            <th style="width: 105px;text-align: center !important;">Sembuh</th>
+                            <th style="width: 105px;text-align: center !important;">Meninggal</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
         <div class="card">
             <div class="card-header card-header-danger">
-                <h4 class="card-title">Kasus Virus Covid-19 Per Wilayah Di Indonesia</h4>
+                <h4 class="card-title"><i class="material-icons text-white">place</i> Kasus Virus Covid-19 Per Wilayah Di Indonesia</h4>
                 <p class="card-category">
                     <i class="material-icons text-white">link</i>
                     <a href="https://api.kawalcorona.com/indonesia/provinsi">https://api.kawalcorona.com/indonesia/provinsi</a>
@@ -135,19 +161,11 @@
                     <thead>
                         <tr>
                             <th>Wilayah</th>
-                            <th style="width: 10px;">Positif</th>
-                            <th style="width: 10px;">Sembuh</th>
-                            <th style="width: 10px;">Meninggal</th>
+                            <th style="width: 105px;text-align: center !important;">Positif</th>
+                            <th style="width: 105px;text-align: center !important;">Sembuh</th>
+                            <th style="width: 105px;text-align: center !important;">Meninggal</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Wilayah</th>
-                            <th>ID</th>
-                            <th>ID</th>
-                            <th>ID</th>
-                        </tr>
-                    </tfoot>
                     <tbody></tbody>
                 </table>
             </div>
@@ -165,6 +183,114 @@
     var total_dirawat = 0;
 
     $(document).ready(function() {
+        // table-history-indonesia
+        var column_list_his_id = [{
+                "data": "record_date",
+                render: function(data, type, row) {
+                    return type === 'export' ? data : tgl_id_short(data);
+                },
+                "className": "text-left"
+            },
+            {
+                "data": "total_cases",
+                render: function(data, type, row) {
+                    return type === 'export' ? data : numeral(data).format('0,0');
+                },
+                "className": "text-right"
+            },
+            {
+                "data": "new_cases",
+                render: function(data, type, row) {
+                    return type === 'export' ? data : numeral(data).format('0,0');
+                },
+                "className": "text-right"
+            },
+            {
+                "data": "active_cases",
+                render: function(data, type, row) {
+                    return type === 'export' ? data : numeral(data).format('0,0');
+                },
+                "className": "text-right"
+            },
+            {
+                "data": "total_recovered",
+                render: function(data, type, row) {
+                    return type === 'export' ? data : numeral(data).format('0,0');
+                },
+                "className": "text-right"
+            },
+            {
+                "data": "total_deaths",
+                render: function(data, type, row) {
+                    return type === 'export' ? data : numeral(data).format('0,0');
+                },
+                "className": "text-right"
+            }
+        ];
+
+        var column_def_his_id = [{
+            "orderable": true,
+            "targets": 0,
+        }];
+
+        table_his_id = $('.table-history-indonesia').DataTable({
+            "bProcessing": false,
+            "bServerSide": false,
+            "searchDelay": 150,
+            "lengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            "columnDefs": column_def_his_id,
+            "columns": column_list_his_id,
+            "order": [
+                [0, "desc"]
+            ],
+            buttons: {
+                dom: {
+                    button: {
+                        tag: 'button',
+                        className: ''
+                    }
+                },
+
+                buttons: [{
+                        extend: 'excel',
+                        exportOptions: {
+                            orthogonal: 'export'
+                        },
+                        className: 'btn btn-sm btn-success'
+                    },
+                    {
+                        extend: 'pdf',
+                        orientation: 'landscape',
+                        exportOptions: {
+                            orthogonal: 'export-pdf'
+                        },
+                        className: 'btn btn-sm btn-danger'
+                    }
+                ]
+            },
+            "sDom": "<'row'<'col-sm-6' B><'col-sm-6 text-right' l> r> t <'row'<'col-sm-6' i><'col-sm-6 text-right' p>> ",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_",
+                "sZeroRecords": "Maaf, data yang anda cari tidak ditemukan",
+                "sProcessing": "<i class=\"m-loader m-loader--brand\"></i> <span style=\"padding-left: 15px;\">Silahkan Tunggu</span>",
+                "sInfo": "_START_ - _END_ / _TOTAL_",
+                "sInfoEmpty": "0 - 0 / 0",
+                "infoFiltered": "(_MAX_)",
+                "oPaginate": {
+                    "sPrevious": "<i class='fa fa-angle-double-left'></i>",
+                    "sNext": "<i class='fa fa-angle-double-right'></i>"
+                }
+            }
+        });
+
+        $('.table-history-indonesia').tooltip({
+            selector: "[data-toggle=tooltip]",
+            container: "body"
+        });
+
         var column_list_indonesia = [{
                 "data": "Provinsi",
                 render: function(data, type, row) {
@@ -238,7 +364,7 @@
                     }
                 ]
             },
-            "sDom": "<'row'<'col-sm-6' B><'col-sm-6 text-right' l> r> t <'row'<'col-sm-6' i><'col-sm-6 text-right' p>> ",
+            "sDom": "<'row'<'col-sm-6'B><'col-sm-4 text-right' f><'col-sm-2 text-right' l> r> t <'row'<'col-sm-6' i><'col-sm-6 text-right' p>> ",
             "oLanguage": {
                 "sLengthMenu": "_MENU_",
                 "sZeroRecords": "Maaf, data yang anda cari tidak ditemukan",
@@ -256,28 +382,6 @@
         $('.table-indonesia').tooltip({
             selector: "[data-toggle=tooltip]",
             container: "body"
-        });
-
-        $('.table-indonesia tfoot th').each(function() {
-            var title = $('.table-indonesia tfoot th').eq($(this).index()).text();
-            if (title !== "Aksi" && title !== "ID") {
-                $(this).html('<input type="text" class="form-control form-control-sm form-datatable" style="width:100%;border-radius: 0px;" placeholder="Cari ' + title + '" />');
-            } else {
-                $(this).html('');
-            }
-        });
-
-        var input_filter_value;
-        var input_filter_timeout = null;
-        table_indonesia.columns().every(function() {
-            var that = this;
-            $('input', this.footer()).on('keyup change', function(ev) {
-                input_filter_value = this.value;
-                clearTimeout(input_filter_timeout);
-                input_filter_timeout = setTimeout(function() {
-                    table_indonesia.search(input_filter_value).draw();
-                }, table_indonesia.context[0].searchDelay);
-            });
         });
     });
 
@@ -373,7 +477,7 @@
                                 ],
                                 fill: false,
                                 lineTension: 0.5,
-                                label: "Rasio Kasus Virus Covid-19 Di Negara " + country_name
+                                label: "Rasio Kasus Virus Covid-19 Di Indonesia "
                             }],
                             labels: PLabel
                         },
@@ -411,7 +515,19 @@
                     var obj = jQuery.parseJSON(resp);
                     var periode = {};
                     var dataset = ['Positif', 'Perawatan', 'Meninggal', 'Sembuh'];
+                    table_his_id.clear().draw();
+                    var data_table = [];
+                    var no = 0;
                     $.each(obj.stat_by_country, function(i, val) {
+                        data_table[no] = {
+                            'record_date': val.record_date,
+                            'total_cases': val.total_cases,
+                            'new_cases': val.new_cases,
+                            'active_cases': val.active_cases,
+                            'total_recovered': val.total_recovered,
+                            'total_deaths': val.total_deaths,
+                        };
+
                         periode[val.record_date.substring(0, 10)] = {
                             'Periode': val.record_date.substring(0, 10),
                             'Positif': val.total_cases,
@@ -419,7 +535,9 @@
                             'Meninggal': val.total_deaths,
                             'Sembuh': val.total_recovered,
                         };
+                        no++;
                     });
+                    table_his_id.rows.add(data_table).draw();
 
                     var PLabel = [];
                     var JsonData = [];
@@ -430,7 +548,6 @@
                     });
 
                     $.each(dataset, function(h_key, h_val) {
-                        // console.log(h_val);
                         var PDataJml = [];
                         var PDataJmlPositif = [];
                         $.each(periode, function(key, data) {
