@@ -179,7 +179,7 @@ class Home extends MY_Controller
           'class' => 'form-control ',
         ),
         'data' => $this->countries,
-        'value' => '',
+        'value' => 'Indonesia',
         'name' => 'countries',
       ),
     );
