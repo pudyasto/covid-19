@@ -287,7 +287,7 @@ function generateBarRecover(arr){
         maintainAspectRatio: false,
         legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
         legend: {
-            display: true,
+            display: false,
             position: 'bottom',
             fontSize: 9,
             boxWidth: 20
@@ -371,7 +371,7 @@ function generateBarDeath(arr){
         maintainAspectRatio: false,
         legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
         legend: {
-            display: true,
+            display: false,
             position: 'bottom',
             fontSize: 9,
             boxWidth: 20
