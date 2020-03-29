@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <canvas id="chart-id" style="display: block; height: 400px;"></canvas>
+                        <canvas id="chart-id" style="display: block; height: 300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                 </p>
             </div>
             <div class="card-body">
-                <canvas id="chart-pie" style="display: block; height: 551px;"></canvas>
+                <canvas id="chart-pie" style="display: block; height: 451px;"></canvas>
             </div>
             <div class="card-footer">
                 <div class="stats tgl-update"></div>
@@ -170,15 +170,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <canvas id="chart-stacked-global" style="display: block; height: 500px;"></canvas>
+                        <canvas id="chart-stacked-global" style="display: block; height: 300px;"></canvas>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <table class="table">
-                    <tr>
-                        <td colspan="2" class="text-center">Rata Rata Persentase Kasus Covid-19</td>
-                    </tr>
                     <tr>
                         <td class="text-center">
                             <div class="label-avg-sembuh">Rata rata persen sembuh</div>
@@ -206,7 +203,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <canvas id="chart-bar-recover-desc" style="display: block; height: 500px;"></canvas>
+                        <canvas id="chart-bar-recover-desc" style="display: block; height: 300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -222,7 +219,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <canvas id="chart-bar-death-desc" style="display: block; height: 500px;"></canvas>
+                        <canvas id="chart-bar-death-desc" style="display: block; height: 300px;"></canvas>
                     </div>
                 </div>
             </div>
